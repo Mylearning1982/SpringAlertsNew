@@ -1,0 +1,28 @@
+package com.openclassroom.safteynetalertsrefactor.service;
+
+import com.openclassroom.safteynetalertsrefactor.model.FireStation;
+import com.openclassroom.safteynetalertsrefactor.model.Person;
+import com.openclassroom.safteynetalertsrefactor.repository.FireStationRepository;
+import com.openclassroom.safteynetalertsrefactor.repository.PersonRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class FireStationService {
+
+    private  final FireStationRepository fireStationRepository;
+
+    public FireStationService(FireStationRepository fireStationRepository) {
+        this.fireStationRepository = fireStationRepository;
+    }
+
+    public List<FireStation> getAllFireStations() {
+        return fireStationRepository.findAll();
+    }
+
+    public FireStation addFireStation(FireStation fireStation){
+        fireStationRepository.add(fireStation);
+        return fireStation;
+    }
+}
