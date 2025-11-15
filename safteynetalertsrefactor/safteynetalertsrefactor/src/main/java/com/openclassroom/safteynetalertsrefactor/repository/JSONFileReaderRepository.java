@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class JSONFileReaderRepository {
@@ -33,22 +34,29 @@ public class JSONFileReaderRepository {
         this.writePath = Path.of(writePathStr);
     }
 
-    // Read JSON from file (prefer external writePath, otherwise classpath resource)
-    public JsonNode readJson() {
-        try {
-            if (Files.exists(writePath)) {
-                try (InputStream in = Files.newInputStream(writePath)) {
-                    return objectMapper.readTree(in);
-                }
+    public JsonNode readJson(){
+        return readFromExternalFile().orElseGet(this::readFromClasspath);
+    }
+
+    private Optional<JsonNode>readFromExternalFile(){
+        if(Files.exists(writePath)){
+            try(InputStream in = Files.newInputStream(writePath)){
+                return Optional.of(objectMapper.readTree(in));
+            } catch (IOException e) {
+                log.error("Error reading JSON from external file", e);
             }
-            try (InputStream in = getClass().getClassLoader().getResourceAsStream(classpathResource)) {
-                if (in == null) {
-                    return objectMapper.createObjectNode();
-                }
-                return objectMapper.readTree(in);
+        }
+        return Optional.empty();
+    }
+
+    private JsonNode readFromClasspath(){
+        try(InputStream in = getClass().getClassLoader().getResourceAsStream(classpathResource)){
+            if(in == null){
+                return objectMapper.createObjectNode();
             }
+            return objectMapper.readTree(in);
         } catch (IOException e) {
-            log.error("Error reading JSON, returning empty object node", e);
+            log.error("Error reading JSON from classpath resource, returning empty object node", e);
             return objectMapper.createObjectNode();
         }
     }
@@ -62,13 +70,13 @@ public class JSONFileReaderRepository {
             }
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(writePath.toFile(), root);
         } catch (IOException e) {
+            log.error("Error writing JSON to file", e);
             throw new RuntimeException(e);
         }
     }
 
     public <T> List<T> readList(String arrayName, Class<T> elementType) {
-        JsonNode root = readJson();
-        JsonNode arrayNode = root.path(arrayName);
+        JsonNode arrayNode = readJson().path(arrayName);
         if (!arrayNode.isArray() || arrayNode.isEmpty()) {
             return new ArrayList<>();
         }

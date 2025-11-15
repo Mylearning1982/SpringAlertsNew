@@ -1,8 +1,6 @@
 package com.openclassroom.safteynetalertsrefactor.service;
 
-import com.openclassroom.safteynetalertsrefactor.model.FireStation;
 import com.openclassroom.safteynetalertsrefactor.model.MedicalRecord;
-import com.openclassroom.safteynetalertsrefactor.repository.FireStationRepository;
 import com.openclassroom.safteynetalertsrefactor.repository.MedicalRecordsRepository;
 import org.springframework.stereotype.Service;
 

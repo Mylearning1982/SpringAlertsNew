@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class PersonRepository {
@@ -36,4 +37,15 @@ public class PersonRepository {
         JSONFileReaderRepository.writeList(p, persons);
     }
 
-}
+    public synchronized Optional<Person> findByName(String firstName, String lastName) {
+        for (Person p : persons) {
+            if (p.getFirstName().equals(firstName) && p.getLastName().equals(lastName)) {
+                return Optional.of(p);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public synchronized void persist() {
+        JSONFileReaderRepository.writeList(p, persons);
+    }}

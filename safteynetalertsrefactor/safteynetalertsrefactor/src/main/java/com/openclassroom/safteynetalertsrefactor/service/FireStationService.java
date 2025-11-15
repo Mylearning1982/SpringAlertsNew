@@ -1,9 +1,7 @@
 package com.openclassroom.safteynetalertsrefactor.service;
 
 import com.openclassroom.safteynetalertsrefactor.model.FireStation;
-import com.openclassroom.safteynetalertsrefactor.model.Person;
 import com.openclassroom.safteynetalertsrefactor.repository.FireStationRepository;
-import com.openclassroom.safteynetalertsrefactor.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

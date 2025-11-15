@@ -1,7 +1,5 @@
 package com.openclassroom.safteynetalertsrefactor.controller;
-import com.openclassroom.safteynetalertsrefactor.model.FireStation;
 import com.openclassroom.safteynetalertsrefactor.model.MedicalRecord;
-import com.openclassroom.safteynetalertsrefactor.service.FireStationService;
 import com.openclassroom.safteynetalertsrefactor.service.MedicalRecordsService;
 import org.springframework.web.bind.annotation.*;
 

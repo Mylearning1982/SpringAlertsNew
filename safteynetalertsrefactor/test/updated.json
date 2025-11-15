@@ -1,60 +1,12 @@
 {
   "persons" : [ {
-    "firstName" : "Rajesh",
-    "lastName" : "DantuJampluri",
-    "address" : "1509 Culver St",
-    "city" : "Culver",
-    "zip" : "97451",
-    "phone" : "841-874-6512",
-    "email" : "johndoe@example.com"
-  }, {
-    "firstName" : "Rajesh",
-    "lastName" : "Dantuluri",
-    "address" : "1509 Culver St",
-    "city" : "Culver",
-    "zip" : "97451",
-    "phone" : "841-874-6512",
-    "email" : "johndoe@example.com"
-  }, {
-    "firstName" : "Kiran",
-    "lastName" : "Dantuluri",
-    "address" : "1509 Culver St",
-    "city" : "Culver",
-    "zip" : "97451",
-    "phone" : "841-874-6512",
-    "email" : "johndoe@example.com"
-  }, {
-    "firstName" : "Kiran",
-    "lastName" : "Doe",
-    "address" : "1509 Culver St",
-    "city" : "Culver",
-    "zip" : "97451",
-    "phone" : "841-874-6512",
-    "email" : "johndoe@example.com"
-  }, {
-    "firstName" : "Kiran",
-    "lastName" : "Doe",
-    "address" : "1509 Culver St",
-    "city" : "Culver",
-    "zip" : "97451",
-    "phone" : "841-874-6512",
-    "email" : "johndoe@example.com"
-  }, {
-    "firstName" : "Madhuri",
-    "lastName" : "Doe",
-    "address" : "1509 Culver St",
-    "city" : "Culver",
-    "zip" : "97451",
-    "phone" : "841-874-6512",
-    "email" : "johndoe@example.com"
-  }, {
     "firstName" : "John",
     "lastName" : "Boyd",
-    "address" : "1509 Culver St",
+    "address" : "5665 laurel pine",
     "city" : "Culver",
     "zip" : "97451",
     "phone" : "841-874-6512",
-    "email" : "jaboyd@email.com"
+    "email" : "john.boyd@example.com"
   }, {
     "firstName" : "Jacob",
     "lastName" : "Boyd",
@@ -233,6 +185,9 @@
     "email" : "gramps@email.com"
   } ],
   "firestations" : [ {
+    "address" : "4567 laurel",
+    "station" : 3
+  }, {
     "address" : "5665 laurel",
     "station" : 3
   }, {
@@ -276,6 +231,12 @@
     "station" : 2
   } ],
   "medicalrecords" : [ {
+    "firstName" : "Rajesh",
+    "lastName" : "Doe",
+    "birthdate" : "03/06/1984",
+    "medications" : [ "aznol:350mg", "hydrapermazol:100mg" ],
+    "allergies" : [ "nillacilan" ]
+  }, {
     "firstName" : "Madhuri",
     "lastName" : "Doe",
     "birthdate" : "03/06/1984",

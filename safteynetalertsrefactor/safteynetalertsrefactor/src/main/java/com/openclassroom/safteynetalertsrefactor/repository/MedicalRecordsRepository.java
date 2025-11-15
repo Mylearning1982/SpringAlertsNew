@@ -1,6 +1,5 @@
 package com.openclassroom.safteynetalertsrefactor.repository;
 
-import com.openclassroom.safteynetalertsrefactor.model.FireStation;
 import com.openclassroom.safteynetalertsrefactor.model.MedicalRecord;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
