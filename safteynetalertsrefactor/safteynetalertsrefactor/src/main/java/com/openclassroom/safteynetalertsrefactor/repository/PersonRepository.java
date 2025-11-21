@@ -21,7 +21,7 @@ public class PersonRepository {
     }
 
     @PostConstruct
-    private void init() {
+    void init() {
             List<Person> loaded = JSONFileReaderRepository.readList(p, Person.class);
             if (loaded != null) {
                 persons.addAll(loaded);
@@ -32,12 +32,12 @@ public class PersonRepository {
         return new ArrayList<>(persons);
     }
 
-    public synchronized void add(Person newPerson) {
+    public void add(Person newPerson) {
         persons.add(0, newPerson);
         JSONFileReaderRepository.writeList(p, persons);
     }
 
-    public synchronized Optional<Person> findByName(String firstName, String lastName) {
+    public Optional<Person> findByName(String firstName, String lastName) {
         for (Person p : persons) {
             if (p.getFirstName().equals(firstName) && p.getLastName().equals(lastName)) {
                 return Optional.of(p);
@@ -46,6 +46,16 @@ public class PersonRepository {
         return Optional.empty();
     }
 
-    public synchronized void persist() {
+    public boolean deletePerson (String firstName, String lastName) {
+        Optional<Person> personToDelete = findByName(firstName, lastName);
+        if (personToDelete.isEmpty()) {
+            return false;
+        }
+        persons.remove(personToDelete.get());
+        persist();
+        return true;
+    }
+
+    public void persist() {
         JSONFileReaderRepository.writeList(p, persons);
     }}

@@ -25,21 +25,22 @@ public class PersonService {
         return person;
     }
 
-    public synchronized boolean update(Person updatedPerson) {
-        Optional<Person> pd = personRepository.findByName(updatedPerson.getFirstName(), updatedPerson.getLastName());
-        if (pd.isEmpty()) {
+    public boolean updatePerson(String firstName, String lastName, Person updatedPerson) {
+        Optional<Person> existingPersonOpt = personRepository.findByName(firstName, lastName);
+        if (existingPersonOpt.isEmpty()) {
             return false;
         }
-
-        Person existing = pd.get();
-
-        existing.setAddress(updatedPerson.getAddress());
-        existing.setCity(updatedPerson.getCity());
-        existing.setZip(updatedPerson.getZip());
-        existing.setPhone(updatedPerson.getPhone());
-        existing.setEmail(updatedPerson.getEmail());
-
+        Person existingPerson = existingPersonOpt.get();
+        existingPerson.setAddress(updatedPerson.getAddress());
+        existingPerson.setCity(updatedPerson.getCity());
+        existingPerson.setZip(updatedPerson.getZip());
+        existingPerson.setPhone(updatedPerson.getPhone());
+        existingPerson.setEmail(updatedPerson.getEmail());
         personRepository.persist();
         return true;
+    }
+
+    public boolean delete (String firstName, String lastName) {
+        return personRepository.deletePerson(firstName, lastName);
     }
 }

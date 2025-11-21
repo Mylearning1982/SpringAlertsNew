@@ -27,13 +27,20 @@ public class PersonController {
         return personService.addPerson(person);
     }
 
-    @PutMapping
-    public ResponseEntity<Boolean> update(@RequestBody Person updatedPerson) {
-        boolean ok = personService.update(updatedPerson);
-        if (ok) {
-            return ResponseEntity.ok(true);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
-        }
+    @PutMapping("/{lastName}/{firstName}")
+    public ResponseEntity<Boolean> updatePerson(@PathVariable String firstName,
+                                                @PathVariable String lastName,
+                                                @RequestBody Person updatedPerson) {
+
+        boolean ok = personService.updatePerson(firstName, lastName, updatedPerson);
+        return ok ? ResponseEntity.ok(true) : ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
     }
+
+    @DeleteMapping("/{lastName}/{firstName}")
+    public ResponseEntity<Boolean> deletePerson(@PathVariable String firstName,
+                                          @PathVariable String lastName) {
+        boolean deleted = personService.delete(firstName, lastName);
+        return deleted ? ResponseEntity.ok(true) : ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+    }
+
 }

@@ -29,14 +29,17 @@ public class JSONFileReaderRepository {
     public JSONFileReaderRepository(
             @Value("${app.data.classpath-resource:data.json}") String classpathResource,
             @Value("${app.data.write-path:test/updated.json}") String writePathStr
+
     ) {
         this.classpathResource = classpathResource;
         this.writePath = Path.of(writePathStr);
     }
 
+    // Read JsonNode from external file if exists, otherwise from classpath
     public JsonNode readJson(){
         return readFromExternalFile().orElseGet(this::readFromClasspath);
     }
+
 
     private Optional<JsonNode>readFromExternalFile(){
         if(Files.exists(writePath)){
@@ -49,9 +52,11 @@ public class JSONFileReaderRepository {
         return Optional.empty();
     }
 
+
     private JsonNode readFromClasspath(){
         try(InputStream in = getClass().getClassLoader().getResourceAsStream(classpathResource)){
             if(in == null){
+                log.warn("Classpath resource {} not found, returning empty object node", classpathResource);
                 return objectMapper.createObjectNode();
             }
             return objectMapper.readTree(in);
@@ -61,7 +66,7 @@ public class JSONFileReaderRepository {
         }
     }
 
-    // Write JsonNode to file
+    // Write JsonNode to external file
     public void writeJson(JsonNode root) {
         try {
             Path parent = writePath.toAbsolutePath().getParent();
@@ -70,11 +75,12 @@ public class JSONFileReaderRepository {
             }
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(writePath.toFile(), root);
         } catch (IOException e) {
-            log.error("Error writing JSON to file", e);
-            throw new RuntimeException(e);
+            log.error("Error writing JSON to file: {}",writePath, e);
+            throw new RuntimeException("Failed to write JSON file",e);
         }
     }
 
+// Read a list of objects from a JSON array and convert them to a List<T>
     public <T> List<T> readList(String arrayName, Class<T> elementType) {
         JsonNode arrayNode = readJson().path(arrayName);
         if (!arrayNode.isArray() || arrayNode.isEmpty()) {
@@ -86,6 +92,7 @@ public class JSONFileReaderRepository {
         );
     }
 
+//    Convert a List<T> to a JSON array and write it to the JSON file
     public <T> void writeList(String arrayName, List<T> items) {
         JsonNode root = readJson();
         ObjectNode objectNode = root.isObject() ? (ObjectNode) root : objectMapper.createObjectNode();

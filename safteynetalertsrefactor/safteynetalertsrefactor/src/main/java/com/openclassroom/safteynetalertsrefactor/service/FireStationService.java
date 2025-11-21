@@ -23,4 +23,16 @@ public class FireStationService {
         fireStationRepository.add(fireStation);
         return fireStation;
     }
+
+    public boolean updateFireStation(String address, FireStation updated) {
+        return fireStationRepository.updateFireStation(address, updated.getStation());
+    }
+
+    public boolean deleteByAddress(String address) {
+        return fireStationRepository.deleteByAddress(address);
+    }
+
+    public boolean deleteByStationNumber(int stationNumber) {
+        return fireStationRepository.deleteByStationNumber(stationNumber);
+    }
 }

@@ -22,4 +22,11 @@ public class MedicalRecordsService {
         medicalRecordsRepository.add(medicalRecord);
         return medicalRecord;
     }
+
+    public boolean updateMedicalRecord(String firstName, String lastName, MedicalRecord updatedMedicalRecord) {
+        return medicalRecordsRepository.updateMedicalRecord(firstName, lastName, updatedMedicalRecord);
+    }
+    public boolean deleteMedicalRecord (String firstName, String lastName) {
+        return medicalRecordsRepository.deleteByName(firstName, lastName);
+    }
 }
